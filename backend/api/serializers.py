@@ -14,7 +14,11 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class ExpenseSerializer(serializers.ModelSerializer):
+    idempotency_key = serializers.UUIDField(write_only=True)
+
     class Meta:
         model = Expense
-        fields = "__all__"
-        extra_kwargs = {"user": {"read_only": True}}
+        fields = ["id", "amount", "category", "description", "date", "created_at", "idempotency_key"]
+        extra_kwargs = {
+            "user": {"read_only": True},
+            }
